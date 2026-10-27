@@ -1,0 +1,30 @@
+<policies>
+    <inbound>
+        <base />
+        <!-- AI Gateway: Token-based throttling per consumer key -->
+        <azure-openai-token-limit counter-key="@(context.Subscription.Id)"
+                                  tokens-per-minute="10000"
+                                  estimate-prompt-tokens="false"
+                                  remaining-tokens-variable-name="remainingTokens" />
+        <!-- Semantic & Model caching for latency & cost optimization -->
+        <azure-openai-semantic-cache-lookup score-threshold="0.05"
+                                            embeddings-backend-id="openai-backend"
+                                            embeddings-backend-auth="system-assigned" />
+        <!-- Authenticate against Azure OpenAI via APIM Managed Identity -->
+        <authentication-managed-identity resource="https://cognitiveservices.azure.com" />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+        <azure-openai-semantic-cache-store duration="3600" />
+        <!-- Expose token telemetry headers -->
+        <set-header name="x-ai-remaining-tokens" exists-action="override">
+            <value>@(context.Variables.GetValueOrDefault<string>("remainingTokens"))</value>
+        </set-header>
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
