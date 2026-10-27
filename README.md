@@ -1,5 +1,6 @@
 # 🤖 Azure Enterprise AI & GenAI Landing Zone (Terraform)
 
+[![CI/CD Pipeline](https://github.com/sanjiivsingh/azure-enterprise-ai-landing-zone-terraform/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/sanjiivsingh/azure-enterprise-ai-landing-zone-terraform/actions/workflows/ci-cd.yml)
 [![Terraform 1.9+](https://img.shields.io/badge/Terraform-1.9+-844FBA?style=for-the-badge&logo=terraform&logoColor=white)](https://www.terraform.io/)
 [![Azure Provider v4+](https://img.shields.io/badge/AzureRM-v4.0+-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 [![DevSecOps Checkov](https://img.shields.io/badge/Security-Checkov_SAST-10B981?style=for-the-badge&logo=securityscorecard&logoColor=white)](https://www.checkov.io/)
@@ -161,6 +162,19 @@ This repository enforces automated quality and security checks on every pull req
 | **`Checkov`** | Shift-Left SAST | CIS Azure Benchmark & Zero-Trust security rules |
 | **`tfsec`** | Security Audit | Vulnerability and insecure default detection |
 | **`Gitleaks`** | Secret Interception | Blocks commits containing API keys or private tokens |
+
+---
+
+---
+
+## 🧹 Cleanup & Resource Teardown
+
+To avoid ongoing charges for Azure API Management and OpenAI compute resources:
+
+```bash
+cd environments/dev
+terraform destroy -auto-approve
+```
 
 ---
 
