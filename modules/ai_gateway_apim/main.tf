@@ -27,3 +27,10 @@ resource "azurerm_api_management_backend" "openai" {
 
   description = "Enterprise Azure OpenAI Backend with Private Network Connectivity"
 }
+
+resource "azurerm_api_management_policy" "global_ai_policy" {
+  api_management_id = azurerm_api_management.apim.id
+  xml_content       = file("${path.module}/policies/ai-gateway-policy.xml")
+
+  depends_on = [azurerm_api_management_backend.openai]
+}
