@@ -1,9 +1,9 @@
 locals {
   common_tags = {
     Environment        = var.environment
-    Architect          = "Sanjeev Kumar Singh"
-    Contact            = "sanjeevsinghred@gmail.com"
-    Portfolio          = "sanjeevsingh.oneps.in"
+    Architect          = "Sanjeev Singh"
+    Contact            = "https://github.com/sanjiivsingh"
+    Portfolio          = "https://sanjeevsingh.oneps.in"
     InfrastructureType = "Enterprise AI Landing Zone"
     Governance         = "CAF for AI & CIS Benchmark"
     ManagedBy          = "Terraform"
