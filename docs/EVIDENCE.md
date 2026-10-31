@@ -37,3 +37,4 @@ Success! The configuration is valid.
 | **Log Analytics Workspace** | Pay-as-you-go | Usage based (~$2.30/GB) |
 | **Virtual Network & Private Endpoints** | 4 Private Endpoints | ~$29.20 |
 | **Total Base Monthly Est.** | | **~$154.23 – $383.23 / month** |
+

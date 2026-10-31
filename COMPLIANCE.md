@@ -24,3 +24,4 @@ This document provides a concrete control mapping between the Terraform configur
 | **Managed Identity Auth** | Passwordless service-to-service communication | Azure Entra Managed Identity eliminating stored connection strings or API keys | `modules/ai_gateway_apim/policies/ai-gateway-policy.xml`: `<authentication-managed-identity>` |
 | **Data Boundary Isolation** | Prevent training data exfiltration | Cognitive Services account deployed with zero public internet ingress | `modules/openai/main.tf`: `public_network_access_enabled = false` |
 | **Cryptographic Protection** | Customer-Managed Key (CMK) envelope encryption | Key Vault Standard SKU with software-isolated CMK wrapping data keys | `modules/key_vault/main.tf`: `sku_name = "standard"` with private DNS link |
+

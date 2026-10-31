@@ -6,3 +6,4 @@ Please report security vulnerabilities responsibly via:
 * **Direct Contact:** [https://github.com/sanjiivsingh](https://github.com/sanjiivsingh)
 
 We acknowledge all reports within 48 hours.
+

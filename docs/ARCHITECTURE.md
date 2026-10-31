@@ -33,3 +33,4 @@ Azure Key Vault offers Standard (software key isolation) and Premium (hardware H
 Deploy **Standard SKU** with Customer-Managed Keys (CMK) and private endpoint integration:
 - Standard SKU provides full encryption-at-rest with customer-controlled keys and automated key rotation at negligible baseline cost.
 - Dedicated Managed HSM is deferred until multi-tenant hardware compliance certification is formally mandated.
+
