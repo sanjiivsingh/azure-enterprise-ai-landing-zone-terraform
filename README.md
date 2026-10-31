@@ -4,12 +4,12 @@
 [![Terraform 1.9+](https://img.shields.io/badge/Terraform-1.9+-844FBA?style=for-the-badge&logo=terraform&logoColor=white)](https://www.terraform.io/)
 [![Azure Provider v4+](https://img.shields.io/badge/AzureRM-v4.0+-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 [![DevSecOps Checkov](https://img.shields.io/badge/Security-Checkov_SAST-10B981?style=for-the-badge&logo=securityscorecard&logoColor=white)](https://www.checkov.io/)
-[![Status: Reference Architecture](https://img.shields.io/badge/Status-Reference_Architecture_(Statically_Validated)-10B981?style=for-the-badge)](https://github.com/sanjiivsingh/azure-enterprise-ai-landing-zone-terraform)
+[![Status: Statically Validated](https://img.shields.io/badge/Status-Statically_Validated-10B981?style=for-the-badge)](docs/EVIDENCE.md)
 [![Compliance: CIS Azure](https://img.shields.io/badge/Compliance-CIS_Azure_Mapped-0284C7?style=for-the-badge)](COMPLIANCE.md)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
 > **Reference Architecture · Statically Validated**  
-> Enterprise Generative AI Landing Zone engineered on Microsoft Azure using modular Terraform. Implements a Zero-Trust perimeter, private networking, Azure OpenAI model deployments (GPT-4o & Embeddings), API Management as an internal AI Gateway with token rate limiting, Azure AI Search vector database for Enterprise RAG, and automated DevSecOps pipelines.
+> Enterprise Generative AI Landing Zone engineered on Microsoft Azure using modular Terraform. Implements a Zero-Trust perimeter, private networking, Azure OpenAI model deployments (GPT-4o & Embeddings), API Management as an internal AI Gateway with token rate limiting, Azure AI Search vector database for Enterprise RAG, and automated DevSecOps pipelines. Detailed verification logs are provided in [docs/EVIDENCE.md](docs/EVIDENCE.md) and architectural decisions in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ---
 
@@ -18,37 +18,25 @@
 ```mermaid
 flowchart TD
     subgraph Hub["🏢 Transit Hub Network (10.0.0.0/16)"]
-        FW[🔥 Azure Firewall Egress]
-        BASTION[🛡️ Azure Bastion & VPN]
-        DNS[🌐 Private DNS Resolver Zone]
-        LOGS[📊 Log Analytics & App Insights]
+        FW["🔥 Azure Firewall Egress"]
+        BASTION["🛡️ Azure Bastion & VPN"]
+        DNS["🌐 Private DNS Resolver Zone"]
+        LOGS["📊 Log Analytics & App Insights"]
     end
 
     subgraph Spoke["🤖 AI Workload Spoke Network (10.100.0.0/16)"]
-        APIM["⚡ AI Gateway (Azure APIM Internal)
-- Token TPM/RPM Rate Limiting
-- Managed Identity Backend Auth
-- Multi-Region Retry & Failover"]
+        APIM["⚡ AI Gateway (Azure APIM Internal)<br/>• Token TPM/RPM Rate Limiting<br/>• Managed Identity Backend Auth<br/>• Multi-Region Retry & Failover"]
         
-        OAI["🧠 Azure OpenAI (Private Endpoint)
-- GPT-4o Model Deployment
-- text-embedding-3-large
-- Public Access: 100% Disabled"]
+        OAI["🧠 Azure OpenAI (Private Endpoint)<br/>• GPT-4o Model Deployment<br/>• text-embedding-3-large<br/>• Public Access: 100% Disabled"]
         
-        SEARCH["🔍 Azure AI Search (Vector RAG)
-- Hybrid Semantic Search
-- Private Link Endpoint"]
+        SEARCH["🔍 Azure AI Search (Vector RAG)<br/>• Hybrid Semantic Search<br/>• Private Link Endpoint"]
         
-        KV["🔒 Azure Key Vault (Standard CMK)
-- Managed Identity RBAC
-- Customer-Managed Keys (CMK)"]
+        KV["🔒 Azure Key Vault (Standard CMK)<br/>• Managed Identity RBAC<br/>• Customer-Managed Keys (CMK)"]
         
-        LAKE["📦 Data Lake Storage Gen2
-- Grounding Document Repository
-- Blob Private Endpoint"]
+        LAKE["📦 Data Lake Storage Gen2<br/>• Grounding Document Repository<br/>• Blob Private Endpoint"]
     end
 
-    App[💻 Enterprise Client / Microservices] -->|Private VNet Link| APIM
+    App["💻 Enterprise Client & Microservices"] -->|Private VNet Link| APIM
     APIM -->|Managed Identity Auth| OAI
     APIM -->|Query & Context| SEARCH
     SEARCH -->|Grounding Chunks| LAKE
@@ -142,10 +130,10 @@ terraform destroy -auto-approve
 
 ---
 
-## 👨‍💻 Author & Cloud Consultant
+## 👨‍💻 Author & Cloud Architect
 
 **Sanjeev Singh**  
-*Freelance Azure Cloud Engineer | Terraform & Platform Infrastructure*  
+*Senior Azure Cloud Architect & DevSecOps Platform Engineer*  
 * 🌐 **Portfolio**: [sanjeevsingh.oneps.in](https://sanjeevsingh.oneps.in)  
 * 💼 **LinkedIn**: [linkedin.com/in/sanjiivsingh](https://linkedin.com/in/sanjiivsingh)  
 * 🐙 **GitHub**: [github.com/sanjiivsingh](https://github.com/sanjiivsingh)
