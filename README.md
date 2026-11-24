@@ -2,7 +2,7 @@
 
 [![CI/CD Pipeline](https://github.com/sanjiivsingh/azure-enterprise-ai-landing-zone-terraform/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/sanjiivsingh/azure-enterprise-ai-landing-zone-terraform/actions/workflows/ci-cd.yml)
 [![Terraform 1.9+](https://img.shields.io/badge/Terraform-1.9+-844FBA?style=for-the-badge&logo=terraform&logoColor=white)](https://www.terraform.io/)
-[![Azure Provider v4+](https://img.shields.io/badge/AzureRM-v4.0+-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
+[![Azure Provider v5+](https://img.shields.io/badge/AzureRM-v5.11+-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 [![DevSecOps Checkov](https://img.shields.io/badge/Security-Checkov_SAST-10B981?style=for-the-badge&logo=securityscorecard&logoColor=white)](https://www.checkov.io/)
 [![Status: Statically Validated](https://img.shields.io/badge/Status-Statically_Validated-10B981?style=for-the-badge)](docs/EVIDENCE.md)
 [![Compliance: CIS Azure](https://img.shields.io/badge/Compliance-CIS_Azure_Mapped-0284C7?style=for-the-badge)](COMPLIANCE.md)
@@ -58,12 +58,12 @@ flowchart TD
 ## 🎯 Key Architectural Pillars
 
 ### 1. 🛡️ Zero-Trust Network Perimeter (100% Private Endpoints)
-* **Zero Public Exposure**: `public_network_access_enabled = false` enforced across Azure OpenAI, Azure AI Search, Azure Key Vault, and Data Lake Storage.
+* **Zero Public Exposure**: Private network access strictly enforced across Azure OpenAI, Azure AI Search, Azure Key Vault (`public_network_access_enabled = false`), and Data Lake Storage Gen2 (`public_network_access = "Disabled"`).
 * **Micro-Segmented Subnets**:
   * `snet-ai-private-endpoints` (`10.100.1.0/24`): Dedicated isolated network space for Private Links.
   * `snet-apim-gateway` (`10.100.2.0/24`): Internal VNet injection for API Management.
   * `snet-app-workload` (`10.100.3.0/24`): Application tier consumption.
-* **Private DNS Zones**: Seamless internal FQDN resolution via `privatelink.openai.azure.com`, `privatelink.search.windows.net`, `privatelink.vaultcore.azure.net`, and `privatelink.blob.core.windows.net`.
+* **Private DNS Zones**: Seamless internal FQDN resolution via `privatelink.openai.azure.com`, `privatelink.search.windows.net`, `privatelink.vaultcore.azure.net`, and `privatelink.blob.core.windows.net` linked using AzureRM v5 consolidated `private_dns_zone_id`.
 
 ### 2. ⚡ AI Gateway via Azure API Management (APIM)
 * **Token Rate Limiting**: Enforces strict Tokens-Per-Minute (TPM) and Requests-Per-Minute (RPM) quotas per consumer application to mitigate unexpected cost spikes and DoS attacks.

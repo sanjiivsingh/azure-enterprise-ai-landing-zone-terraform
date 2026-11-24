@@ -1,7 +1,7 @@
 resource "azurerm_search_service" "this" {
   name                          = var.search_service_name
   resource_group_name           = var.resource_group_name
-  location                      = var.location
+  location                      = coalesce(var.search_location, var.location)
   sku                           = var.sku
   public_network_access_enabled = false
   semantic_search_sku           = "free"
@@ -20,10 +20,9 @@ resource "azurerm_private_dns_zone" "search" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "search" {
-  name                  = "link-search-vnet"
-  resource_group_name   = var.resource_group_name
-  private_dns_zone_name = azurerm_private_dns_zone.search.name
-  virtual_network_id    = var.vnet_id
+  name                = "link-search-vnet"
+  private_dns_zone_id = azurerm_private_dns_zone.search.id
+  virtual_network_id  = var.vnet_id
 }
 
 resource "azurerm_private_endpoint" "search" {

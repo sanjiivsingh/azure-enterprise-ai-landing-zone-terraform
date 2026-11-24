@@ -32,7 +32,7 @@ variable "model_deployments" {
     "gpt-4o" = {
       model_format  = "OpenAI"
       model_name    = "gpt-4o"
-      model_version = "2024-05-13"
+      model_version = "2024-08-06"
       sku_name      = "GlobalStandard"
       sku_capacity  = 30
     },

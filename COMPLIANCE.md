@@ -8,10 +8,10 @@ This document provides a concrete control mapping between the Terraform configur
 
 | Security Standard | Control ID | Control Description | Architectural Implementation in Code |
 | :--- | :--- | :--- | :--- |
-| **CIS Azure Benchmark** | 5.1.1 | Ensure that Azure Storage Account public network access is disabled | `modules/storage/main.tf`: `public_network_access_enabled = false` with Private Endpoint |
+| **CIS Azure Benchmark** | 5.1.1 | Ensure that Azure Storage Account public network access is disabled | `modules/storage/main.tf`: `public_network_access = "Disabled"` with Private Endpoint |
 | **CIS Azure Benchmark** | 8.4 | Ensure that Key Vault disables public network access | `modules/key_vault/main.tf`: `public_network_access_enabled = false` with Private Endpoint |
 | **CIS Azure Benchmark** | 8.1 | Ensure that Key Vault has soft delete and purge protection enabled | `modules/key_vault/main.tf`: `purge_protection_enabled = true`, `soft_delete_retention_days = 90` |
-| **NIST SP 800-53** | AC-3 / SC-7 | Access Enforcement & Boundary Protection | `modules/network/main.tf`: Micro-segmented subnets (`snet-ai-private-endpoints`, `snet-apim-gateway`, `snet-app-workload`) with NSG default-deny rules |
+| **NIST SP 800-53** | AC-3 / SC-7 | Access Enforcement & Boundary Protection | `modules/network/main.tf`: Micro-segmented subnets (`snet-ai-private-endpoints`, `snet-apim-gateway`, `snet-app-workload`) with explicit NSG association, internal APIM management rules (TCP 3443, 6390), and default-deny internet rules |
 | **NIST SP 800-53** | SC-8 | Transmission Confidentiality and Integrity | `modules/ai_gateway_apim/main.tf`: APIM deployed in `virtual_network_type = "Internal"` with Private DNS zone resolution |
 
 ---

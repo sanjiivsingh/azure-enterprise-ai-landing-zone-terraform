@@ -1,16 +1,15 @@
 resource "azurerm_storage_account" "this" {
-  name                          = var.storage_account_name
-  resource_group_name           = var.resource_group_name
-  location                      = var.location
-  account_tier                  = "Standard"
-  account_replication_type      = "GRS"
-  account_kind                  = "StorageV2"
-  is_hns_enabled                = true
-  min_tls_version               = "TLS1_2"
-  public_network_access_enabled = false
+  name                     = var.storage_account_name
+  resource_group_name      = var.resource_group_name
+  location                 = var.location
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+  account_kind             = "StorageV2"
+  is_hns_enabled           = true
+  min_tls_version          = "TLS1_2"
+  public_network_access    = "Disabled"
 
   blob_properties {
-    versioning_enabled = true
     delete_retention_policy {
       days = 14
     }
@@ -31,10 +30,9 @@ resource "azurerm_private_dns_zone" "blob" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "blob" {
-  name                  = "link-blob-vnet"
-  resource_group_name   = var.resource_group_name
-  private_dns_zone_name = azurerm_private_dns_zone.blob.name
-  virtual_network_id    = var.vnet_id
+  name                = "link-blob-vnet"
+  private_dns_zone_id = azurerm_private_dns_zone.blob.id
+  virtual_network_id  = var.vnet_id
 }
 
 resource "azurerm_private_endpoint" "blob" {

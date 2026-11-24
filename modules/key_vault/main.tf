@@ -9,7 +9,7 @@ resource "azurerm_key_vault" "this" {
   soft_delete_retention_days  = 90
   purge_protection_enabled    = true
   sku_name                    = "standard"
-  rbac_authorization_enabled    = true
+  rbac_authorization_enabled  = true
 
   public_network_access_enabled = false
 
@@ -28,10 +28,9 @@ resource "azurerm_private_dns_zone" "vault" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "vault" {
-  name                  = "link-vault-vnet"
-  resource_group_name   = var.resource_group_name
-  private_dns_zone_name = azurerm_private_dns_zone.vault.name
-  virtual_network_id    = var.vnet_id
+  name                = "link-vault-vnet"
+  private_dns_zone_id = azurerm_private_dns_zone.vault.id
+  virtual_network_id  = var.vnet_id
 }
 
 resource "azurerm_private_endpoint" "vault" {

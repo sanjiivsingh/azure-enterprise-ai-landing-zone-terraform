@@ -73,6 +73,7 @@ module "ai_search" {
   source              = "../../modules/ai_search"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
+  search_location     = var.search_location
   search_service_name = "srch-${var.prefix}-${var.environment}-01"
   subnet_id           = module.network.subnet_ids["snet-ai-private-endpoints"]
   vnet_id             = module.network.vnet_id
@@ -83,7 +84,7 @@ module "storage" {
   source               = "../../modules/storage"
   resource_group_name  = azurerm_resource_group.rg.name
   location             = var.location
-  storage_account_name = "st${var.prefix}${var.environment}01"
+  storage_account_name = lower("st${var.environment}0123")
   subnet_id            = module.network.subnet_ids["snet-ai-private-endpoints"]
   vnet_id              = module.network.vnet_id
   tags                 = local.common_tags

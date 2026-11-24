@@ -10,5 +10,6 @@ output "vnet_name" {
 
 output "subnet_ids" {
   value       = { for k, v in azurerm_subnet.subnets : k => v.id }
+  depends_on  = [azurerm_subnet_network_security_group_association.subnets]
   description = "Map of subnet names to their respective IDs."
 }
